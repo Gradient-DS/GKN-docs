@@ -118,18 +118,26 @@
                               "type": "integer",
                               "example": 989398
                             },
-                            "filetype": {
-                              "type": "string",
-                              "example": "Internetpagina"
-                            },
-                            "url": {
-                              "type": "string",
-                              "format": "uri",
-                              "example": "https://edepot.wur.nl/510048"
-                            },
-                            "access": {
-                              "type": "string",
-                              "example": "public"
+                            "links": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "filetype": {
+                                    "type": "string",
+                                    "example": "PDF"
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://edepot.wur.nl/510048"
+                                  },
+                                  "access": {
+                                    "type": "string",
+                                    "example": "public"
+                                  }
+                                }
+                              }
                             },
                             "descriptionDUT": {
                               "type": "string"
