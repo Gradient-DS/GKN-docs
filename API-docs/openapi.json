@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Vector Search API for GKN",
+      "version": "1.0.0",
+      "description": "API for retrieving documents relevant to a given query using a FAISS vector database build from the original GKN dataset."
+    },
+    "components": {
+      "securitySchemes": {
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-Key"
+        }
+      },
+      "responses": {
+        "UnauthorizedError": {
+          "description": "API key is missing or invalid",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "detail": {
+                    "type": "string",
+                    "example": "Invalid or missing API key"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BadRequestError": {
+          "description": "Invalid input or missing required fields",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "detail": {
+                    "type": "string",
+                    "example": "The 'question' field is required."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "InternalServerError": {
+          "description": "Unexpected server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "detail": {
+                    "type": "string",
+                    "example": "An unexpected error occurred."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "paths": {
+      "/search": {
+        "post": {
+          "summary": "Search documents based on a question",
+          "security": [
+            {
+              "ApiKeyAuth": []
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "question": {
+                      "type": "string",
+                      "example": "Wat is het stikstofbeleid in Nederland?"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "A list of relevant documents",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "hits": {
+                        "type": "string",
+                        "example": "46188"
+                      },
+                      "start": {
+                        "type": "string",
+                        "example": "0"
+                      },
+                      "records-per-page": {
+                        "type": "string",
+                        "example": "50"
+                      },
+                      "records": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 989398
+                            },
+                            "filetype": {
+                              "type": "string",
+                              "example": "Internetpagina"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri",
+                              "example": "https://edepot.wur.nl/510048"
+                            },
+                            "access": {
+                              "type": "string",
+                              "example": "public"
+                            },
+                            "descriptionDUT": {
+                              "type": "string"
+                            },
+                            "title": {
+                              "type": "string"
+                            },
+                            "publisher": {
+                              "type": "string"
+                            },
+                            "year": {
+                              "type": "string"
+                            },
+                            "contentsubtype": {
+                              "type": "string"
+                            },
+                            "theme": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": ["GKN_KRINGLOOPLANDBOUW"]
+                            },
+                            "keyword": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "example": ["stikstof", "kringlooplandbouw"]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "$ref": "#/components/responses/BadRequestError"
+            },
+            "401": {
+              "$ref": "#/components/responses/UnauthorizedError"
+            },
+            "500": {
+              "$ref": "#/components/responses/InternalServerError"
+            }
+          }
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,33 @@
+{
+    "hits": "46188",
+    "start": "0",
+    "records-per-page": "50",
+    "records": [
+      {
+        "id": 989398,
+        "filetype": "Internetpagina",
+        "url": "https://edepot.wur.nl/510048",
+        "access": "public",
+        "descriptionDUT": "Document over stikstof en kringlooplandbouw.",
+        "title": "Stikstof in de kringloop",
+        "publisher": "WUR",
+        "year": "2023",
+        "contentsubtype": "Artikel",
+        "theme": ["GKN_KRINGLOOPLANDBOUW"],
+        "keyword": ["stikstof", "kringlooplandbouw"]
+      },
+      {
+        "id": 989399,
+        "filetype": "PDF",
+        "url": "https://edepot.wur.nl/510049",
+        "access": "public",
+        "descriptionDUT": "Beleidsdocument stikstofaanpak Nederland.",
+        "title": "Beleidsvisie Stikstof",
+        "publisher": "Ministerie van LNV",
+        "year": "2021",
+        "contentsubtype": "Rapport",
+        "theme": ["GKN_BELEID"],
+        "keyword": ["stikstof", "beleid", "landbouw"]
+      }
+    ]
+  }
