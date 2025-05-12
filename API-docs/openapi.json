@@ -65,6 +65,54 @@
       }
     },
     "paths": {
+      "/": {
+        "get": {
+          "summary": "API Root Endpoint",
+          "description": "Returns a simple message indicating the API is running.",
+          "responses": {
+            "200": {
+              "description": "API is running",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "GKN Vector Search API is running."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/healthz": {
+        "get": {
+          "summary": "Health Check Endpoint",
+          "description": "Returns the health status of the API and its dependencies.",
+          "responses": {
+            "200": {
+              "description": "API and dependencies are healthy",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "GKN Vector Search API is running and Weaviate DB is reachable."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "/search": {
         "post": {
           "summary": "Search documents based on a question",
