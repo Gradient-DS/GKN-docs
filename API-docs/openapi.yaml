@@ -131,26 +131,66 @@ paths:
                               access:
                                 type: string
                                 example: "public"
+                        access:
+                          type: string
+                          example: "public"
+                          description: "Access level of the document"
                         descriptionDUT:
                           type: string
+                          description: "Description in Dutch"
                         title:
                           type: string
+                          description: "Title of the document"
                         publisher:
                           type: string
+                          description: "Publisher of the document"
                         year:
                           type: string
+                          description: "Publication year"
                         contentsubtype:
                           type: string
+                          description: "Content subtype classification"
                         theme:
                           type: array
                           items:
                             type: string
                           example: ["GKN_KRINGLOOPLANDBOUW"]
+                          description: "Thematic categories"
                         keyword:
                           type: array
                           items:
                             type: string
                           example: ["stikstof", "kringlooplandbouw"]
+                          description: "Keywords associated with the document"
+                        journal:
+                          type: string
+                          description: "Journal name if applicable"
+                        relevance_score:
+                          type: number
+                          format: float
+                          example: 0.7234
+                          description: "Relevance score from the search algorithm"
+                        chunk_content:
+                          type: string
+                          description: "Content of the document chunk that matched the search"
+                        total_page_count:
+                          type: integer
+                          example: 45
+                          description: "Total number of pages in the document"
+                        source_page_numbers:
+                          type: array
+                          items:
+                            type: integer
+                          example: [12, 13, 14]
+                          description: "Page numbers where the relevant content was found"
+                        start_page:
+                          type: integer
+                          example: 12
+                          description: "Starting page number of the relevant content"
+                        merged_from_chunks:
+                          type: integer
+                          example: 3
+                          description: "Number of chunks that were merged to create this result"
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
