@@ -1,221 +1,221 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Vector Search API for GKN",
-      "version": "1.0.0",
-      "description": "API for retrieving documents relevant to a given query using a FAISS vector database build from the original GKN dataset."
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Vector Search API for GKN",
+    "version": "1.0.0",
+    "description": "API for retrieving documents relevant to a given query using a FAISS vector database build from the original GKN dataset."
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
     },
-    "components": {
-      "securitySchemes": {
-        "ApiKeyAuth": {
-          "type": "apiKey",
-          "in": "header",
-          "name": "X-API-Key"
+    "responses": {
+      "UnauthorizedError": {
+        "description": "API key is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string",
+                  "example": "Invalid or missing API key"
+                }
+              }
+            }
+          }
         }
       },
-      "responses": {
-        "UnauthorizedError": {
-          "description": "API key is missing or invalid",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "detail": {
-                    "type": "string",
-                    "example": "Invalid or missing API key"
-                  }
+      "BadRequestError": {
+        "description": "Invalid input or missing required fields",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string",
+                  "example": "The 'question' field is required."
                 }
               }
             }
           }
-        },
-        "BadRequestError": {
-          "description": "Invalid input or missing required fields",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "detail": {
-                    "type": "string",
-                    "example": "The 'question' field is required."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "InternalServerError": {
-          "description": "Unexpected server error",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "detail": {
-                    "type": "string",
-                    "example": "An unexpected error occurred."
-                  }
+        }
+      },
+      "InternalServerError": {
+        "description": "Unexpected server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "detail": {
+                  "type": "string",
+                  "example": "An unexpected error occurred."
                 }
               }
             }
           }
         }
       }
-    },
-    "paths": {
-      "/": {
-        "get": {
-          "summary": "API Root Endpoint",
-          "description": "Returns a simple message indicating the API is running.",
-          "responses": {
-            "200": {
-              "description": "API is running",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string",
-                        "example": "GKN Vector Search API is running."
-                      }
-                    }
+    }
+  },
+  "paths": {
+    "/search": {
+      "post": {
+        "summary": "Search documents based on a question",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "example": "Wat is het stikstofbeleid in Nederland?"
                   }
                 }
               }
             }
           }
-        }
-      },
-      "/healthz": {
-        "get": {
-          "summary": "Health Check Endpoint",
-          "description": "Returns the health status of the API and its dependencies.",
-          "responses": {
-            "200": {
-              "description": "API and dependencies are healthy",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "message": {
-                        "type": "string",
-                        "example": "GKN Vector Search API is running and Weaviate DB is reachable."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/search": {
-        "post": {
-          "summary": "Search documents based on a question",
-          "security": [
-            {
-              "ApiKeyAuth": []
-            }
-          ],
-          "requestBody": {
-            "required": true,
+        },
+        "responses": {
+          "200": {
+            "description": "A list of relevant documents",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "question": {
+                    "hits": {
                       "type": "string",
-                      "example": "Wat is het stikstofbeleid in Nederland?"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "A list of relevant documents",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "hits": {
-                        "type": "string",
-                        "example": "46188"
-                      },
-                      "start": {
-                        "type": "string",
-                        "example": "0"
-                      },
-                      "records-per-page": {
-                        "type": "string",
-                        "example": "50"
-                      },
-                      "records": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "integer",
-                              "example": 989398
-                            },
-                            "links": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "filetype": {
-                                    "type": "string",
-                                    "example": "PDF"
-                                  },
-                                  "url": {
-                                    "type": "string",
-                                    "format": "uri",
-                                    "example": "https://edepot.wur.nl/510048"
-                                  },
-                                  "access": {
-                                    "type": "string",
-                                    "example": "public"
-                                  }
+                      "example": "46188"
+                    },
+                    "start": {
+                      "type": "string",
+                      "example": "0"
+                    },
+                    "records-per-page": {
+                      "type": "string",
+                      "example": "50"
+                    },
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 989398
+                          },
+                          "links": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "filetype": {
+                                  "type": "string",
+                                  "example": "PDF"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri",
+                                  "example": "https://edepot.wur.nl/510048"
+                                },
+                                "access": {
+                                  "type": "string",
+                                  "example": "public"
                                 }
                               }
-                            },
-                            "descriptionDUT": {
-                              "type": "string"
-                            },
-                            "title": {
-                              "type": "string"
-                            },
-                            "publisher": {
-                              "type": "string"
-                            },
-                            "year": {
-                              "type": "string"
-                            },
-                            "contentsubtype": {
-                              "type": "string"
-                            },
-                            "theme": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "example": ["GKN_KRINGLOOPLANDBOUW"]
-                            },
-                            "keyword": {
-                              "type": "array",
-                              "items": {
-                                "type": "string"
-                              },
-                              "example": ["stikstof", "kringlooplandbouw"]
                             }
+                          },
+                          "access": {
+                            "type": "string",
+                            "example": "public",
+                            "description": "Access level of the document"
+                          },
+                          "descriptionDUT": {
+                            "type": "string",
+                            "description": "Description in Dutch"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Title of the document"
+                          },
+                          "publisher": {
+                            "type": "string",
+                            "description": "Publisher of the document"
+                          },
+                          "year": {
+                            "type": "string",
+                            "description": "Publication year"
+                          },
+                          "contentsubtype": {
+                            "type": "string",
+                            "description": "Content subtype classification"
+                          },
+                          "theme": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["GKN_KRINGLOOPLANDBOUW"],
+                            "description": "Thematic categories"
+                          },
+                          "keyword": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "example": ["stikstof", "kringlooplandbouw"],
+                            "description": "Keywords associated with the document"
+                          },
+                          "journal": {
+                            "type": "string",
+                            "description": "Journal name if applicable"
+                          },
+                          "relevance_score": {
+                            "type": "number",
+                            "format": "float",
+                            "example": 0.7234,
+                            "description": "Relevance score from the search algorithm"
+                          },
+                          "chunk_content": {
+                            "type": "string",
+                            "description": "Content of the document chunk that matched the search"
+                          },
+                          "total_page_count": {
+                            "type": "integer",
+                            "example": 45,
+                            "description": "Total number of pages in the document"
+                          },
+                          "source_page_numbers": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [12, 13, 14],
+                            "description": "Page numbers where the relevant content was found"
+                          },
+                          "start_page": {
+                            "type": "integer",
+                            "example": 12,
+                            "description": "Starting page number of the relevant content"
+                          },
+                          "merged_from_chunks": {
+                            "type": "integer",
+                            "example": 3,
+                            "description": "Number of chunks that were merged to create this result"
                           }
                         }
                       }
@@ -223,19 +223,19 @@
                   }
                 }
               }
-            },
-            "400": {
-              "$ref": "#/components/responses/BadRequestError"
-            },
-            "401": {
-              "$ref": "#/components/responses/UnauthorizedError"
-            },
-            "500": {
-              "$ref": "#/components/responses/InternalServerError"
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
     }
   }
-  
+}

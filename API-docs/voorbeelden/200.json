@@ -5,29 +5,53 @@
     "records": [
       {
         "id": 989398,
-        "filetype": "Internetpagina",
-        "url": "https://edepot.wur.nl/510048",
+        "links": [
+          {
+            "filetype": "PDF",
+            "url": "https://edepot.wur.nl/510048",
+            "access": "public"
+          }
+        ],
         "access": "public",
-        "descriptionDUT": "Document over stikstof en kringlooplandbouw.",
+        "descriptionDUT": "Document over stikstof en kringlooplandbouw in de Nederlandse landbouwsector.",
         "title": "Stikstof in de kringloop",
         "publisher": "WUR",
         "year": "2023",
         "contentsubtype": "Artikel",
         "theme": ["GKN_KRINGLOOPLANDBOUW"],
-        "keyword": ["stikstof", "kringlooplandbouw"]
+        "keyword": ["stikstof", "kringlooplandbouw"],
+        "journal": "Landbouw en Milieu",
+        "relevance_score": 0.8542,
+        "chunk_content": "Het stikstofbeleid in Nederland richt zich op het verminderen van stikstofemissies uit de landbouw door middel van kringlooplandbouw. Dit houdt in dat nutriënten efficiënter worden benut en dat er minder kunstmest nodig is.",
+        "total_page_count": 45,
+        "source_page_numbers": [12, 13, 14],
+        "start_page": 12,
+        "merged_from_chunks": 3
       },
       {
         "id": 989399,
-        "filetype": "PDF",
-        "url": "https://edepot.wur.nl/510049",
+        "links": [
+          {
+            "filetype": "PDF",
+            "url": "https://edepot.wur.nl/510049",
+            "access": "public"
+          }
+        ],
         "access": "public",
-        "descriptionDUT": "Beleidsdocument stikstofaanpak Nederland.",
+        "descriptionDUT": "Beleidsdocument stikstofaanpak Nederland met concrete maatregelen voor de landbouwsector.",
         "title": "Beleidsvisie Stikstof",
         "publisher": "Ministerie van LNV",
         "year": "2021",
         "contentsubtype": "Rapport",
         "theme": ["GKN_BELEID"],
-        "keyword": ["stikstof", "beleid", "landbouw"]
+        "keyword": ["stikstof", "beleid", "landbouw"],
+        "journal": null,
+        "relevance_score": 0.7891,
+        "chunk_content": "De Nederlandse regering heeft een alomvattende beleidsvisie ontwikkeld voor de aanpak van stikstofproblematiek. Deze visie omvat maatregelen voor zowel de industrie als de landbouwsector.",
+        "total_page_count": 78,
+        "source_page_numbers": [23, 24, 25, 26],
+        "start_page": 23,
+        "merged_from_chunks": 4
       }
     ]
   }
