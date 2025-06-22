@@ -31,7 +31,17 @@ components:
             properties:
               detail:
                 type: string
-                example: "The 'question' field is required."
+                examples:
+                  missing_question:
+                    value: "The 'question' field is required."
+                  invalid_alpha_type:
+                    value: "The 'hybrid_search_alpha' field must be a number."
+                  invalid_alpha_range:
+                    value: "The 'hybrid_search_alpha' field must be between 0.0 and 1.0."
+                  invalid_cutoff_type:
+                    value: "The 'search_relevance_cutoff' field must be a number."
+                  invalid_cutoff_range:
+                    value: "The 'search_relevance_cutoff' field must be between 0.0 and 1.0."
     InternalServerError:
       description: Unexpected server error
       content:
@@ -44,38 +54,6 @@ components:
                 example: "An unexpected error occurred."
 
 paths:
-  /:
-    get:
-      summary: API Root Endpoint
-      description: Returns a simple message indicating the API is running.
-      responses:
-        '200':
-          description: API is running
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "GKN Vector Search API is running."
-
-  /healthz:
-    get:
-      summary: Health Check Endpoint
-      description: Returns the health status of the API and its dependencies.
-      responses:
-        '200':
-          description: API and dependencies are healthy
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "GKN Vector Search API is running and Weaviate DB is reachable."
-
   /search:
     post:
       summary: Search documents based on a question
@@ -87,10 +65,26 @@ paths:
           application/json:
             schema:
               type: object
+              required: ["question"]
               properties:
                 question:
                   type: string
                   example: "Wat is het stikstofbeleid in Nederland?"
+                  description: "The search query or question to find relevant documents for"
+                hybrid_search_alpha:
+                  type: number
+                  format: float
+                  minimum: 0.0
+                  maximum: 1.0
+                  example: 0.4
+                  description: "Optional. Balance between vector search (1.0) and keyword search (0.0). Higher values favor semantic similarity, lower values favor exact keyword matches. Default: 0.4"
+                search_relevance_cutoff:
+                  type: number
+                  format: float
+                  minimum: 0.0
+                  maximum: 1.0
+                  example: 0.15
+                  description: "Optional. Minimum relevance score threshold for results to be included. Results with scores below this threshold will be filtered out. Default: 0.15"
       responses:
         '200':
           description: A list of relevant documents
