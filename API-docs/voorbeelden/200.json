@@ -2,6 +2,7 @@
     "hits": "46188",
     "start": "0",
     "records-per-page": "50",
+    "filtered_by_doc_ids": ["12345", "67890"],
     "records": [
       {
         "id": 989398,

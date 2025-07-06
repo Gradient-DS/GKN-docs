@@ -71,6 +71,12 @@ paths:
                   type: string
                   example: "Wat is het stikstofbeleid in Nederland?"
                   description: "The search query or question to find relevant documents for"
+                doc_ids:
+                  type: array
+                  items:
+                    type: string
+                  example: ["12345", "67890"]
+                  description: "Optional. Array of document IDs to filter results. Only chunks from these documents will be returned. If not provided, all documents will be searched."
                 hybrid_search_alpha:
                   type: number
                   format: float
@@ -102,6 +108,12 @@ paths:
                   records-per-page:
                     type: string
                     example: "50"
+                  filtered_by_doc_ids:
+                    type: array
+                    items:
+                      type: string
+                    example: ["12345", "67890"]
+                    description: "Array of document IDs that were used to filter the results. Only present when doc_ids parameter was provided."
                   records:
                     type: array
                     items:
