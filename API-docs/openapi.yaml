@@ -74,9 +74,9 @@ paths:
                 doc_ids:
                   type: array
                   items:
-                    type: string
-                  example: ["12345", "67890"]
-                  description: "Optional. Array of document IDs to filter results. Only chunks from these documents will be returned. If not provided, all documents will be searched."
+                    type: integer
+                  example: [12345, 67890]
+                  description: "Optional. Array of document IDs to filter results. Only chunks from these documents will be returned. Document IDs must be integers. If not provided, all documents will be searched."
                 hybrid_search_alpha:
                   type: number
                   format: float
