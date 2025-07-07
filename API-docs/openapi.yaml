@@ -42,6 +42,14 @@ components:
                     value: "The 'search_relevance_cutoff' field must be a number."
                   invalid_cutoff_range:
                     value: "The 'search_relevance_cutoff' field must be between 0.0 and 1.0."
+                  invalid_deduplicate_type:
+                    value: "The 'deduplicate' field must be a boolean."
+                  invalid_max_duplicates_type:
+                    value: "The 'max_duplicates' field must be an integer."
+                  invalid_max_duplicates_value:
+                    value: "The 'max_duplicates' field must be a positive integer."
+                  invalid_max_duplicates_usage:
+                    value: "The 'max_duplicates' field can only be used when 'deduplicate' is false."
     InternalServerError:
       description: Unexpected server error
       content:
@@ -91,6 +99,15 @@ paths:
                   maximum: 1.0
                   example: 0.15
                   description: "Optional. Minimum relevance score threshold for results to be included. Results with scores below this threshold will be filtered out. Default: 0.15"
+                deduplicate:
+                  type: boolean
+                  example: true
+                  description: "Optional. Whether to merge duplicate results with the same ID, title, or URL. When true, duplicates are merged and page numbers are combined. When false, duplicates are kept separate. Default: true"
+                max_duplicates:
+                  type: integer
+                  minimum: 1
+                  example: 5
+                  description: "Optional. Maximum number of results with the same ID, title, or URL to return. Can only be used when 'deduplicate' is false. If not specified when deduplicate=false, all duplicates will be returned."
       responses:
         '200':
           description: A list of relevant documents
@@ -111,8 +128,8 @@ paths:
                   filtered_by_doc_ids:
                     type: array
                     items:
-                      type: string
-                    example: ["12345", "67890"]
+                      type: integer
+                    example: [12345, 67890]
                     description: "Array of document IDs that were used to filter the results. Only present when doc_ids parameter was provided."
                   records:
                     type: array
